@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block main %}
+    {% include 'robo/contest/contest_navbar.html' %}
+    <div class="tab-content">
+
+
+        <div class="tab-pane show active">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div id="user-search">
+                        <div class="row justify-content-center">
+                            <div class="col-12">
+                                <div class="m-2">
+                                    <form action="" method="get"
+                                          id="search-form"><!----> <!----> <!---->
+                                        <div class="input-group"><!----> <input type="text" placeholder="Izlash..."
+                                                                                name="search" class="form-control">
+                                            <div class="input-group-append">
+                                                <button type="submit" id="search" class="btn btn-primary"><i
+                                                        class="fas fa-search"></i> Izlash
+                                                </button>
+                                            </div>
+                                        </div> <!----></form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover m-0 table-borderless table-striped text-left slim-table">
+                            <tbody>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <a href="">Ism
+                                        va familiya <i class="fa fa-sort"></i></a></th>
+                                <th class="text-center"><a
+                                        href="">Tizimdagi
+                                    reytingi <i class="fa fa-sort"></i></a></th>
+                                <th>
+                                    <a href="">Faolligi
+                                        <i class="fa fa-sort"></i></a></th>
+                            </tr>
+                            {% for user in users %}
+                                <tr>
+                                    <td>
+                                        <img class="user-avatar" src="https://robocontest.uz/assets/img/no-avatar.jpg"
+                                             alt="Profile picture of user Humoyun Sultonov" width="40px">
+                                    </td>
+                                    <td>
+                                        <a href="">
+                                            {{ user.get_full_name }}
+                                        </a>
+                                        <div class="small">
+                                            Lorem ipsum dolor sit amet.
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <i class="fas fa-medal text-primary"></i>
+                                        (0)
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-pill badge-secondary text-white">None</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

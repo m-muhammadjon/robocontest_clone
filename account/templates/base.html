@@ -1,0 +1,246 @@
+{% load static %}
+<!doctype html>
+<html prefix="og: http://ogp.me/ns#" lang="uz">
+
+<!-- Mirrored from robocontest.uz/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 14 Jan 2022 13:05:28 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
+<head>
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <title>Bosh sahifa - RoboContest</title>
+    <meta name="keywords"
+          content="c++, cpp, python, piton, c#, csharp, pascal, pascalabc, javascript, nodejs, dasturlash, masalalar, tatu, dasturlashdan masalalar">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="9BWhk3TrkNRsSwoe6LRCsiqBtRd4oaJMq6UorWqa">
+    <meta name="description"
+          content="Robocontest.uz - bu sizning dasturlash mahoratingizni oshirish, bilimingizni kengaytirish va texnik suhbatlarga tayyorgarlik ko&#039;rish uchun yordam beradigan eng ilg&#039;or platformalardan biri. Ushbu platforma dunyoning eng kuchli algo platformalari...">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{% static 'assets/img/watermark.jpg' %}">
+    <meta name="twitter:title" content="RoboContest">
+    {% block styles %}
+    {% endblock styles %}
+    <link rel='stylesheet' href="{% static 'css/themes/dark5f5b.css' %}">
+
+    <meta name='theme-color' content='#000'>
+
+    <style>[wire\:loading], [wire\:loading\.delay], [wire\:loading\.inline-block], [wire\:loading\.inline], [wire\:loading\.block], [wire\:loading\.flex], [wire\:loading\.table], [wire\:loading\.grid], [wire\:loading\.inline-flex] {
+        display: none;
+    }
+
+    [wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short], [wire\:loading\.delay\.long], [wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest] {
+        display: none;
+    }
+
+    [wire\:offline] {
+        display: none;
+    }
+
+    [wire\:dirty]:not(textarea):not(input):not(select) {
+        display: none;
+    }
+
+    input:-webkit-autofill, select:-webkit-autofill, textarea:-webkit-autofill {
+        animation-duration: 50000s;
+        animation-name: livewireautofill;
+    }
+
+    @keyframes livewireautofill {
+        from {
+        }
+    }</style>
+
+</head>
+<body>
+<div id="app">
+    <div class="container my-3">
+        <div class="d-none d-sm-block">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+
+                    <li class="breadcrumb-item active" aria-current="page">Bosh sahifa</li>
+
+                </ol>
+            </nav>
+
+        </div>
+
+        <div class="form-row">
+            <div class="col-12 col-xl-2 col-md-3 col-sm-4 mb-3">
+                <aside class="sidebar">
+                    <section>
+                        <span class="d-inline d-sm-none pull-right ml-1" id='message'><i class="fa fa-bars"></i></span>
+                        <a href="{% url 'account:home' %}"><h4 class="robocontest">RoboContest</h4></a>
+                        <span id="snowflake" class="h4"><i class="fa fa-snowflake"></i></span>
+                    </section>
+
+                    <nav id="sidebar" class="d-none d-sm-block mt-2">
+                        {% if request.user.is_authenticated %}
+                            <div class="">
+                                <a href="{% url 'account:profile' request.user.username %}"
+                                   class="btn btn-link text-decoration-none" style="margin-left: -3px;">
+                                    <img class="rounded-circle" src="https://robocontest.uz/assets/img/no-avatar.jpg"
+                                         width="32px"><b>&nbsp;&nbsp;{{ request.user.username }}</b>
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="{% if name == 'users' %}active{% endif %}">
+                            <a href="{% url 'account:users' %}" class="btn btn-link text-decoration-none">
+                                <i class="fa fa-user"></i> Foydalanuvchilar </a>
+                        </div>
+                        <div class="{% if name == 'tasks' %}active{% endif %}">
+                            <a href="{% url 'robo:tasks' %}" class="btn btn-link text-decoration-none">
+                                <i class="fas fa-book"></i> Masalalar </a>
+                        </div>
+                        <div class="{% if name == 'attempts' %}active{% endif %}">
+                            <a href="{% url 'robo:attempts' %}" class="btn btn-link text-decoration-none">
+                                <i class="fab fa-strava"></i> Urinishlar </a>
+                        </div>
+
+
+                        <div class="">
+                            <a href="{% url 'robo:contests' %}" class="btn btn-link text-decoration-none">
+                                <i class="fas fa-medal"></i> Olimpiadalar
+                            </a>
+                        </div>
+                        <div class="">
+                            <a href="" class="btn btn-link text-decoration-none">
+                                <i class="fas fa-subscript"></i> Testlar </a>
+                        </div>
+
+
+                        <div class="">
+                            <a href="" class="btn btn-link text-decoration-none">
+                                <i class="fas fa-newspaper"></i> Yangiliklar </a>
+                        </div>
+                        <div class="">
+                            <a href="" class="btn btn-link text-decoration-none">
+                                <i class="fa fa-info-circle"></i> Tizimda ishlash </a>
+                        </div>
+                        <hr>
+                        <div>
+                            <a href="" class="btn btn-link text-decoration-none">
+                                <i class="fa fa-code"></i> Bizning jamoa </a>
+                        </div>
+
+                        <div>
+                            <a href="" class="btn btn-link text-decoration-none"
+                               target="_blank">
+                                <i class="fab fa-telegram"></i> Telegram kanalimiz </a>
+                        </div>
+
+                        <hr>
+                        {% if not request.user.is_authenticated %}
+                            <div class="{% if name == 'login' %}active{% endif %}">
+                                <a href="{% url 'account:login' %}" class="btn btn-link text-decoration-none">
+                                    <i class="fa fa-key"></i> Kirish </a>
+                            </div>
+                            <div class="{% if name == 'register' %}active{% endif %}">
+                                <a href="{% url 'account:register' %}" class="btn btn-link text-decoration-none">
+                                    <i class="fa fa-user-plus"></i> Ro'yxatdan o'tish </a>
+                            </div>
+                        {% else %}
+                            <div class="">
+                                <a href="{% url 'account:logout' %}" class="btn btn-link text-decoration-none">
+                                    <i class="fa fa-lock"></i> Chiqish </a>
+                            </div>
+                        {% endif %}
+                    </nav>
+
+                </aside>
+            </div>
+
+            <div class="col-12 col-xl-10 col-md-9 col-sm-8">
+                <header class="d-sm-none d-block">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+
+                            <li class="breadcrumb-item active" aria-current="page">Bosh sahifa</li>
+
+                        </ol>
+                    </nav>
+
+                </header>
+
+
+                <main>
+                    {% block main %}
+                    {% endblock main %}
+                </main>
+            </div>
+
+            <div class="col-12 py-2 py-4">
+                <p class="my-0 py-0 text-center">Robocontest.uz Copyrighted © 2020-2022 by <a
+                        href="">Robocontest
+                    Team</a></p>
+                <p class="my-0 py-0 text-gray small text-center">
+                    Generated in {{ gen_time }}ms</p>
+
+
+                <div class="text-center small mt-2">
+                    <a href=""
+                       class="mx-1  font-weight-bold ">
+                        Oʻzbekcha </a>
+                    <a href=""
+                       class="mx-1 ">
+                        Русский </a>
+                    <a href=""
+                       class="mx-1 ">
+                        English </a>
+                </div>
+
+                <div class="text-center small mt-2">
+                    <a href=""
+                       style="min-width: 32px; min-height: 32px; background: #f2f2f2; padding-top: 6px;"
+                       class="rounded shadow border d-inline-block mx-2 text-decoration-none">
+                        &nbsp; </a>
+                    <a href="" style="min-width: 32px; min-height: 32px; background: #222; padding-top: 6px;"
+                       class="rounded shadow border d-inline-block mx-2 text-decoration-none">
+                        <i class="fa fa-check"></i> </a>
+                    <a href=""
+                       style="min-width: 32px; min-height: 32px; background: #122332; padding-top: 6px;"
+                       class="rounded shadow border d-inline-block mx-2 text-decoration-none">
+                        &nbsp; </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="snow"></div>
+
+<link media="all" type="text/css" rel="stylesheet" href="{% static 'assets/css/codemirror.css' %}"/>
+<link media="all" type="text/css" rel="stylesheet" href="{% static 'assets/css/monokai.min.css' %}"/>
+<script>
+    {% block scripts %}
+    {% endblock scripts %}
+</script>
+<!-- Scripts -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/vue-app38cc.js' %}"></script>
+<script src="{% static 'js/codemirrore7eb.js' %}"></script>
+
+
+<script src="{% static 'assets/js/jquery.snow.js' %}"></script>
+<script>
+
+    $("#snowflake").click(() => {
+        localStorage.setItem('noSnow', localStorage['noSnow'] === 'true' ? 'false' : 'true')
+        location.reload()
+    });
+
+    let noSnow = localStorage.getItem('noSnow');
+
+    if (noSnow === undefined || noSnow === null || noSnow === 'false') {
+        $("#snow").snow({
+            intensity: 4 * (window.screen.availWidth / 1000),
+            sizeRange: [10, 15],
+            opacityRange: [0.5, 1],
+            driftRange: [-3, 3],
+            speedRange: [25, 70]
+        });
+    }
+</script>
+</body>
+</html>

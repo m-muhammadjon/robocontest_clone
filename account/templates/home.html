@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Bu qanday sayt?</h2>
+                        </div>
+
+                        <div class="col-12 col-lg-4 col-md-6 mb-3">
+                            <div class="card mt-1 overflow-hidden">
+                                <img src="{% static 'assets/img/watermark.jpg' %}" alt="robocontest.uz" width="100%">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-8 col-md-6 mb-3">
+                            <div><b>Robocontest.uz</b> - bu sizning dasturlash mahoratingizni oshirish, bilimingizni
+                                kengaytirish va texnik suhbatlarga tayyorgarlik ko'rish uchun yordam beradigan eng
+                                ilg'or
+                                platformalardan biri. <br>Ushbu platforma dunyoning eng kuchli algo platformalari
+                                tajribasini o'rganish asosida yaratilgan bo'lib o'quv va do'stona raqobatni kuchaytirish
+                                imkonini yaratadi
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body p-0">
+
+            <div class="container">
+                <div class="row text-center pt-3">
+                    <div class="col-lg-3 col-md-6">
+                        <img class="mb-2" src="{% static 'assets/icons/programming/014-keyboard.png' %}"
+                             alt="working in system"
+                             width="96" height="96">
+
+                        <div class="h4 mt-2">
+                            <a href="">Tizimda ishlash</a>
+                        </div>
+
+                        <p>Tizimda qanday ishlashni bilmaysizmi? Bu uchun ushbu bo&#039;limini o&#039;rganib chiqish
+                            tavsiya
+                            etiladi.</p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <img class="mb-2" src="{% static 'assets/icons/programming/029-coding.png' %}" alt="tasks"
+                             width="96" height="96">
+
+                        <div class="h4 mt-2">
+                            <a href="{% url 'robo:tasks' %}">Masalalar</a>
+                        </div>
+
+                        <p>Tizim haqida yetarlicha tushunchaga ega bo&#039;ldingizmi? Unday bo&#039;lsa masalar yechish
+                            vaqti keldi!</p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <img class="mb-2" src="{% static 'assets/icons/programming/036-hierarchical-structure.png' %}"
+                             alt="olympiads" width="96" height="96">
+
+                        <div class="h4 mt-2">
+                            <a href="{% url 'robo:contests' %}">Olimpiadalar</a>
+                        </div>
+
+                        <p>Kuchingizni sinab ko&#039;rmoqchimisiz? Unday bo&#039;lsa tizimda bo&#039;lib o&#039;tadigan
+                            musobaqalarda qatnashing!</p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <img class="mb-2" src="{% static 'assets/icons/programming/005-group.png' %}" alt="rating"
+                             width="96" height="96">
+
+                        <div class="h4 mt-2">
+                            <a href="">Reyting</a>
+                        </div>
+
+                        <p>Eng kuchlilar reytingi. Siz ham yuqori o&#039;rinlarda bo&#039;lishni xohlaysizmi? Unday bo&#039;lsa
+                            vaqtni boy bermang. Masala yechishni boshlang!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body h350">
+                    <h3 class="text-center pb-2">
+                        Keyingi musobaqa </h3>
+
+
+                    <div class="d-flex flex-column"
+                         style="height: calc(100% - 50px);justify-content: space-between">
+                        <table class="table table-bordered slim-table">
+                            <tr>
+                                <td colspan="2">
+                                    <i class="fa fa-trophy"></i>
+                                    <a href="">RoboContest Round #1</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Boshlanish vaqti</th>
+                                <td>19:00 (15.01.2022)</td>
+                            </tr>
+                            <tr>
+                                <th>Davomiyligi:</th>
+                                <td>02:00:00</td>
+                            </tr>
+                            <tr>
+                                <th>Qatnashuvchilar</th>
+                                <td>351</td>
+                            </tr>
+                        </table>
+
+                        <div class="">
+
+                            Bu amalni bajarish uchun <b><a href=''>tizimga kiring</a></b>,
+                            agar profilingiz bo'lmasa istalgan payt <b><a href=''>ro'yxatdan
+                            o'tishingiz</a></b> mumkin
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+            <div class="card">
+                <div class="card-body h350 d-flex justify-content-around flex-column">
+                    <h3 class="text-center pb-2">
+                        Top 3 </h3>
+
+                    <div class="media mb-2 pb-1 d-flex justify-content-center align-items-center">
+                        <img class="mr-3 user-avatar" src="{% static 'assets/img/no-avatar.jpg' %}" alt="toppers"
+                             width="50px"
+                             height="50px">
+                        <div class="media-body d-flex flex-column">
+                            <a href="" class="font-weight-bolder">
+                                Husayn Hasanov
+                            </a>
+                            <small><i class="fa fa-star mr-1"></i> 9461</small>
+                            <small class="text-truncate" style="max-width: 150px;">&quot;Asaxiy IT&quot; MChJ
+                                Direktori</small>
+                        </div>
+                        <img src="{% static 'assets/icons/awards/038-gold-medal-3.png' %}" alt="toppers"
+                             width="45px" height="45px">
+                    </div>
+                    <div class="media mb-2 pb-1 d-flex justify-content-center align-items-center">
+                        <img class="mr-3 user-avatar" src="{% static 'assets/img/no-avatar.jpg' %}" alt="toppers"
+                             width="50px"
+                             height="50px">
+                        <div class="media-body d-flex flex-column">
+                            <a href="" class="font-weight-bolder">
+                                Otabek Jurabekov
+                            </a>
+                            <small><i class="fa fa-star mr-1"></i> 9086</small>
+                            <small class="text-truncate" style="max-width: 150px;">Profi School Mirobod 10-sinf</small>
+                        </div>
+                        <img src="{% static 'assets/icons/awards/037-silver-medal-3.png' %}" alt="toppers"
+                             width="45px" height="45px">
+                    </div>
+                    <div class="media mb-2 pb-1 d-flex justify-content-center align-items-center">
+                        <img class="mr-3 user-avatar" src="{% static 'assets/img/no-avatar.jpg' %}" alt="toppers"
+                             width="50px"
+                             height="50px">
+                        <div class="media-body d-flex flex-column">
+                            <a href="" class="font-weight-bolder">
+                                Jaxongir Qayumjonov
+                            </a>
+                            <small><i class="fa fa-star mr-1"></i> 8930</small>
+                            <small class="text-truncate" style="max-width: 150px;">TUIT KIF 2-kurs</small>
+                        </div>
+                        <img src="{% static 'assets/icons/awards/036-bronze-medal-2.png' %}" alt="toppers"
+                             width="45px" height="45px">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4 mt-3 mt-md-0">
+            <div class="card">
+                <div class="card-body h350">
+                    <h3 class="text-center pb-2">
+                        Statistika </h3>
+
+                    <div class="media mb-3">
+                        <img class="mr-3" src="{% static 'assets/icons/programming/009-programmer.png' %}" alt="users"
+                             width="50px" height="50px">
+                        <div class="media-body">
+                            <b>Foydalanuvchilar soni</b>
+                            <span class="text-success d-block">
+                                {{ users_count }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="media mb-3">
+                        <img class="mr-3" src="{% static 'assets/icons/programming/014-keyboard.png' %}" alt="attempts"
+                             width="50px" height="50px">
+                        <div class="media-body">
+                            <b>Urinishlar soni</b>
+                            <span class="text-success d-block">
+                                {{ submissions_count }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="media mb-3">
+                        <img class="mr-3" src="{% static 'assets/icons/programming/029-coding.png' %}" alt="tasks"
+                             width="50px" height="50px">
+                        <div class="media-body">
+                            <b>Masalalar soni</b>
+                            <span class="text-success d-block">
+                                {{ tasks_count }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="media mb-3">
+                        <img class="mr-3" src="{% static 'assets/icons/programming/005-group.png' %}" alt="olympiads"
+                             width="50px" height="50px">
+                        <div class="media-body">
+                            <b>Olimpiadalar o'tkazildi</b>
+                            <span class="text-success d-block">
+                                {{ contests_count }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

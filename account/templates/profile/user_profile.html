@@ -1,0 +1,404 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load robo_tags %}
+{% block styles %}
+
+    <style>[wire\:loading], [wire\:loading\.delay], [wire\:loading\.inline-block], [wire\:loading\.inline], [wire\:loading\.block], [wire\:loading\.flex], [wire\:loading\.table], [wire\:loading\.grid], [wire\:loading\.inline-flex] {
+        display: none;
+    }
+
+    [wire\:loading\.delay\.shortest], [wire\:loading\.delay\.shorter], [wire\:loading\.delay\.short], [wire\:loading\.delay\.long], [wire\:loading\.delay\.longer], [wire\:loading\.delay\.longest] {
+        display: none;
+    }
+
+    [wire\:offline] {
+        display: none;
+    }
+
+    [wire\:dirty]:not(textarea):not(input):not(select) {
+        display: none;
+    }
+
+    input:-webkit-autofill, select:-webkit-autofill, textarea:-webkit-autofill {
+        animation-duration: 50000s;
+        animation-name: livewireautofill;
+    }
+
+    @keyframes livewireautofill {
+        from {
+        }
+    }</style>
+
+    <style>
+        .graph-tooltip {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            min-height: 20px;
+            background-color: rgba(0, 0, 0, .8);
+            color: #fff;
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 3px;
+        }
+
+        .graph-tooltip:after {
+            display: block;
+            position: absolute;
+            content: '';
+            bottom: -6px;
+            left: 50%;
+            margin-left: -6px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid rgba(0, 0, 0, .8);
+        }
+    </style>
+    <style>
+        .ts {
+            border-radius: 2px;
+            text-align: center;
+            width: 40px;
+            display: inline-block;
+            color: white;
+        }
+
+        .ts:hover {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    {% include 'profile/profile_navbar.html' %}
+
+    <div class="tab-content">
+        <div class="tab-pane show active">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-5 col-xl-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="position-relative  avatar-container ">
+                                <img src="{% static 'storage/no-avatar.jpg' %}" class="rounded"
+                                     alt="Profile picture of user Muhammadjon Muhamedov" width="100%" id="avatar">
+                                <div class="avatar-overlay">
+                                    <i class="far fa-smile-wink avatar-icon"></i>
+                                </div>
+                                <p class="position-absolute" style="bottom: -11px; right: 5px;">
+                                    <span class="badge badge-pill badge-success">Online</span>
+                                </p>
+                            </div>
+                            <hr>
+
+
+                            <h3 class="card-title text-center">
+                                <b>{{ user.get_full_name }}</b>
+                            </h3>
+                            <h6 class="card-title text-center"><b>Biz bilan {{ user.date_joined|date }} dan beri.</b>
+                            </h6>
+                            <br>
+                            <table class="table table-borderless">
+                                <tbody>
+
+                                <tr>
+                                    <th>Ta'lim muassasasi</th>
+                                    <td>Muhammad al-Xorazmiy nomidagi axborot-kommunikatsiya texnologiyalari
+                                        yo‘nalishiga oid fanlarni chuqurlashtirib o‘qitishga ixtisoslashtirilgan maktab
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Viloyat</th>
+                                    <td>Toshkent shahar</td>
+                                </tr>
+                                <tr>
+                                    <th>Tuman</th>
+                                    <td>Uchtepa tumani</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="text-right">
+                                <a class="badge badge-primary"
+                                   href="https://telegram.me/share/url?url=https://robocontest.uz/profile/muhammadjon"
+                                   target="_blank">
+                                    <i class="fab fa-telegram"></i> Telegram
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-12 col-lg-7 col-xl-6">
+                    <div class="card mb-3">
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex flex-row justify-content-center">
+                                <div class="d-flex flex-column align-items-center mt-4">
+                                    <h1><i class="fa fa-award mr-2"></i> None</h1>
+                                    <p>Tizimdagi o'rni</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="card-body d-flex flex-row justify-content-around">
+                            <div class="d-flex flex-column align-items-center">
+                                <h3><i class="fa fa-tasks mr-2"></i> {{ solved_problem_count }} / {{ tasks.count }}</h3>
+                                <p>Yechgan masalalari</p>
+                            </div>
+                            <div class="d-flex flex-column align-items-center">
+                                <h3><i class="fa fa-star mr-2"></i>{{ solved_score }} / {{ tasks_score }}</h3>
+                                <p>Tizimdagi reytingi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body p-0">
+                            <h5 class="card-header">Urinishlar</h5>
+
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped table-borderless m-0 slim-table">
+                                    <tbody>
+                                    {% if all_submissions|filter_lang:'cpp' %}
+                                        <tr>
+                                            <td class="align-middle py-0 pl-2">
+                                                <img class="rounded"
+                                                     src="https://robocontest.uz/assets/icons/programming-languages/cpp.jpg"
+                                                     alt="cpp" width="32px">
+                                            </td>
+                                            <td class="align-middle">
+                                                cpp
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-success" style="width: 70px">
+                                                        <i class="fa fa-check"></i>
+                                                        {{ accepted_submissions|filter_lang:'cpp' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-info" style="width: 70px">
+                                                        <i class="fab fa-strava"></i>
+                                                        {{ all_submissions|filter_lang:'cpp' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                        <i class="fa fa-times"></i>
+                                                        {{ ignored_submissions|filter_lang:'cpp' }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if all_submissions|filter_lang:'python' %}
+                                        <tr>
+                                            <td class="align-middle py-0 pl-2">
+                                                <img class="rounded"
+                                                     src="https://robocontest.uz/assets/icons/programming-languages/python3.jpg"
+                                                     alt="python3" width="32px">
+                                            </td>
+                                            <td class="align-middle">
+                                                python3
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-success" style="width: 70px">
+                                                        <i class="fa fa-check"></i>
+                                                        {{ accepted_submissions|filter_lang:'python' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-info" style="width: 70px">
+                                                        <i class="fab fa-strava"></i>
+                                                        {{ all_submissions|filter_lang:'python' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                        <i class="fa fa-times"></i>
+                                                        {{ ignored_submissions|filter_lang:'python' }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if all_submissions|filter_lang:'java' %}
+                                        <tr>
+                                            <td class="align-middle py-0 pl-2">
+                                                <img class="rounded"
+                                                     src="https://robocontest.uz/assets/icons/programming-languages/java.jpg"
+                                                     alt="java" width="32px">
+                                            </td>
+                                            <td class="align-middle">
+                                                java
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-success" style="width: 70px">
+                                                        <i class="fa fa-check"></i>
+                                                        {{ accepted_submissions|filter_lang:'java' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-info" style="width: 70px">
+                                                        <i class="fab fa-strava"></i>
+                                                        {{ all_submissions|filter_lang:'java' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                        <i class="fa fa-times"></i>
+                                                        {{ ignored_submissions|filter_lang:'java' }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if all_submissions|filter_lang:'js' %}
+                                        <tr>
+                                            <td class="align-middle py-0 pl-2">
+                                                <img class="rounded"
+                                                     src="https://robocontest.uz/assets/icons/programming-languages/js.jpg"
+                                                     alt="js" width="32px">
+                                            </td>
+                                            <td class="align-middle">
+                                                js
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-success" style="width: 70px">
+                                                        <i class="fa fa-check"></i>
+                                                        {{ accepted_submissions|filter_lang:'js' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-info" style="width: 70px">
+                                                        <i class="fab fa-strava"></i>
+                                                        {{ all_submissions|filter_lang:'js' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                        <i class="fa fa-times"></i>
+                                                        {{ ignored_submissions|filter_lang:'js' }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if all_submissions|filter_lang:'dart' %}
+                                        <tr>
+                                            <td class="align-middle py-0 pl-2">
+                                                <img class="rounded"
+                                                     src="https://robocontest.uz/assets/icons/programming-languages/dart.jpg"
+                                                     alt="dart" width="32px">
+                                            </td>
+                                            <td class="align-middle">
+                                                dart
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-success" style="width: 70px">
+                                                        <i class="fa fa-check"></i>
+                                                        {{ accepted_submissions|filter_lang:'dart' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-info" style="width: 70px">
+                                                        <i class="fab fa-strava"></i>
+                                                        {{ all_submissions|filter_lang:'dart' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                        <i class="fa fa-times"></i>
+                                                        {{ ignored_submissions|filter_lang:'dart' }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if all_submissions|filter_lang:'pypy' %}
+                                        <tr>
+                                            <td class="align-middle py-0 pl-2">
+                                                <img class="rounded"
+                                                     src="{% static 'storage/pypy.png' %}"
+                                                     alt="pypy" width="32px">
+                                            </td>
+                                            <td class="align-middle">
+                                                pypy
+                                            </td>
+                                            <td class="align-middle text-right pr-3">
+                                                <div class="btn-group" role="group">
+                                                    <div class="btn btn-sm btn-success" style="width: 70px">
+                                                        <i class="fa fa-check"></i>
+                                                        {{ accepted_submissions|filter_lang:'pypy' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-info" style="width: 70px">
+                                                        <i class="fab fa-strava"></i>
+                                                        {{ all_submissions|filter_lang:'pypy' }}
+                                                    </div>
+
+                                                    <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                        <i class="fa fa-times"></i>
+                                                        {{ ignored_submissions|filter_lang:'pypy' }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+
+                                    <tr>
+                                        <td colspan="2" class="align-middle h4 font-weight-bold py-3 pl-3">
+                                            Jami
+                                        </td>
+                                        <td class="pr-3 align-middle text-right">
+
+                                            <div class="btn-group" role="group">
+                                                <div class="btn btn-sm btn-success" style="width: 70px">
+                                                    <i class="fa fa-check"></i>
+                                                    {{ accepted_submissions.count }}
+                                                </div>
+
+                                                <div class="btn btn-sm btn-info" style="width: 70px">
+                                                    <i class="fab fa-strava"></i>
+                                                    {{ all_submissions.count }}
+                                                </div>
+
+                                                <div class="btn btn-sm btn-danger" style="width: 70px">
+                                                    <i class="fa fa-times"></i>
+                                                    {{ ignored_submissions.count }}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="h4">Yechilgan masalalar xaritasi</div>
+                            <div>
+                                {% for task in tasks %}
+                                    <a href="{{ task.get_absolute_url }}"
+                                       class="ts mt-1  bg-{% if task.id in accepted_problem_ids %}success{% elif task.id in ignored_problem_ids %}danger{% else %}secondary{% endif %}"
+                                       data-toggle="tooltip" data-placement="top"
+                                       title="{{ task.title }}, {{ task.difficulty }}%"
+                                       data-original-title="A+B, 1%">
+                                        <div>{{ task.number|nulls }}</div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

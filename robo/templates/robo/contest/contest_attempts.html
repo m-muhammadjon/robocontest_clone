@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div>
+        {% include 'robo/contest/contest_navbar.html' %}
+
+        <div class="tab-content">
+
+
+            <div class="tab-pane show active">
+                <div wire:id="6KRlNAZNpixheJpRqPEV">
+                    <div class="card">
+                        <div class="card-body table-responsive p-0">
+                            <table class="table m-0 table-hover table-borderless table-striped text-left slim-table">
+                                <tbody>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Foydalanuvchi</th>
+                                    <th>Masala</th>
+                                    <th>Til</th>
+                                    <th>Holati</th>
+                                    <th>Vaqt</th>
+                                    <th>Xotira</th>
+                                    <th>Yuborilgan vaqt</th>
+                                </tr>
+                                {% for submission in submissions %}
+                                    <tr>
+                                        <td>
+                                            {{ submission.id }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'account:profile' submission.user.username %}">
+                                                {{ submission.user }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ submission.problem.get_absolute_url }}">{{ submission.problem.title }}</a>
+                                        </td>
+                                        <td>
+                                            {{ submission.lang }}
+                                        </td>
+                                        <td nowrap=""
+                                            class="text-{% if submission.verdict == 'Accepted' %}success{% else %}danger{% endif %}">
+                                            {{ submission.verdict }}
+                                        </td>
+                                        <td nowrap="">{{ submission.time }}ms</td>
+                                        <td nowrap="">0 KB</td>
+                                        <td nowrap="">
+                                            {{ submission.created }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

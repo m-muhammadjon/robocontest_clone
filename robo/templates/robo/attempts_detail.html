@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+
+                <li class="breadcrumb-item"><a href="{% url 'account:home' %}">Bosh sahifa</a></li>
+
+
+                <li class="breadcrumb-item"><a href="{% url 'robo:attempts' %}">Urinishlar</a></li>
+
+
+                <li class="breadcrumb-item active" aria-current="page">{{ submission.id }}</li>
+
+            </ol>
+        </nav>
+
+
+        <div class="form-row">
+            <div class="col-12 col-md-8 mb-3">
+                <figure>
+                    <textarea disabled rows="10" cols="70">{{ submission.source }}</textarea>
+                    {% if submission.errors %}
+                        <figcaption class="bg-dark p-2">
+                            <code>
+                                {{ submission.errors }}
+                            </code>
+                        </figcaption>
+                    {% endif %}
+                </figure>
+
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body p-0 pt-3">
+                        <h3 class="card-title pt-3 text-center text-{% if submission.verdict == 'Accepted' %}success{% else %}danger{% endif %}">
+                            {{ submission.verdict }}
+                        </h3>
+
+                        <h5 class="text-primary text-center pb-3">
+                            {{ submission.created|timesince }} avval
+                        </h5>
+
+                        <table class="table m-0">
+                            <tbody>
+                            <tr>
+                                <th>
+                                    Masala
+                                </th>
+                                <td>
+                                    <a href="{{ submission.problem.get_absolute_url }}">
+                                        {{ submission.problem.title }}
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Til
+                                </th>
+                                <td>{{ submission.lang }}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Vaqt
+                                </th>
+                                <td>
+                                    {{ submission.time }} ms
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Xotira
+                                </th>
+                                <td>
+                                    {{ submission.memory }} KB
+                                </td>
+                            </tr>
+                            {% if submission.contest %}
+                                <tr>
+                                    <th>Olimpiada</th>
+                                    <td>
+                                        <a href="{{ submission.contest.get_absolute_url }}">
+                                            {{ submission.contest.name }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+            </div>
+        </div>
+    </div>
+{% endblock %}

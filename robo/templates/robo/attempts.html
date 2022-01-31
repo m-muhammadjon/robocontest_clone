@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body table-responsive p-0">
+                    <table class="table m-0 table-hover table-borderless table-striped text-left slim-table">
+                        <tr id="attempt-top">
+                            <th>#</th>
+                            <th>Foydalanuvchi</th>
+                            <th>Masala</th>
+                            <th>Til</th>
+                            <th>Holati</th>
+                            <th>Vaqt</th>
+                            <th>Xotira</th>
+                            <th>Yuborilgan vaqt</th>
+                        </tr>
+                        {% for submission in submissions %}
+                            <tr id="attempt-{{ submission.id }}">
+                                <td>
+                                    {% if submission.user == request.user %}
+                                        <a href="{% url 'robo:attempt' submission.id %}">{{ submission.id }}</a>
+                                    {% else %}
+                                        {{ submission.id }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if submission.problem.hidden %}
+                                        &mdash;&mdash;&mdash;
+                                    {% else %}
+                                        <a href="{% url 'account:profile' submission.user.username %}">
+                                            {{ submission.user.get_full_name }}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if submission.problem.hidden %}
+                                        &mdash;&mdash;&mdash;
+                                    {% else %}
+                                        <a href='{{ submission.problem.get_absolute_url }}'>{{ submission.problem.title }}</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ submission.lang }}
+                                </td>
+                                <td nowrap
+                                    class="text-{% if submission.verdict == 'Accepted' %}success{% elif submission.verdict == 'Waiting' %}white{% else %}danger{% endif %}">
+                                    {{ submission.verdict }}
+                                </td>
+                                <td nowrap>{{ submission.time }}ms</td>
+                                <td nowrap>{{ submission.memory }} KB</td>
+                                <td nowrap>
+                                    {{ submission.created|date:"d.m.Y h:m" }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<script>
+    {% block scripts %}
+        let url = `ws://${window.location.host}/ws/attempt-socket/`
+        const attemptSocket = new WebSocket(url);
+        console.log('salom');
+        attemptSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data)['event'];
+            const attempt_top = document.querySelector('#attempt-top');
+            let req_user = {% if request.user.username %}"{{ request.user.username }}"{% else %}''{% endif %};
+            if (data['created'] == true) {
+                $(`<tr id="attempt-${data['id']}">
+                    <td id="id">
+                        ${req_user == data['username'] ? `<a href="/attempts/${data['id']}">${data['id']}</a>` : data['id']}
+                    </td>
+                    <td>
+                        <a href="/profile/${data['username']}">
+                            ${data['full_name']}
+                        </a>
+                    </td>
+                    <td>
+
+                        <a href="/tasks/${data['task_id']}">${data['task_name']}</a>
+                    </td>
+                    <td id="lang">
+                        ${data['lang']}
+                    </td>
+                    <td nowrap="" id="verdict" class="text-white">
+                        ${data['verdict']}
+                    </td>
+                    <td nowrap="" id="time">0ms</td>
+                    <td nowrap="">0 KB</td>
+                    <td nowrap="" id="date">
+                        ${data['date']}
+                    </td>
+                </tr>`).insertAfter('#attempt-top');
+            } else {
+                let attempt_id = `#attempt-${data['id']}`;
+                if (data['tugadi'] == false) {
+                    document.querySelector(`tr${attempt_id} td#verdict`).innerHTML = data['verdict'];
+                } else {
+                    document.querySelector(`tr${attempt_id} td#verdict`).innerHTML = data['verdict'];
+                    document.querySelector(`tr${attempt_id} td#time`).innerHTML = `${parseInt(data['time'])}ms`;
+                    if (data['verdict'] == 'Accepted') {
+                        $(`tr${attempt_id} td#verdict`).attr('class', 'text-success');
+                    } else {
+                        $(`tr${attempt_id} td#verdict`).attr('class', 'text-danger');
+                    }
+                }
+            }
+        };
+        attemptSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+    {% endblock %}
+</script>

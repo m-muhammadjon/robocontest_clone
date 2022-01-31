@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block main %}
+    {% include 'profile/profile_navbar.html' %}
+    <div class="tab-content">
+
+        <div class="tab-pane show active">
+            <div class="mb-1">
+                Foydalanuvchi <a href="{% url 'account:profile' user.username %}">{{ user.get_full_name }}</a>
+
+            </div>
+            <div class="card">
+                <div class="card-body table-responsive p-0">
+                    <table class="table m-0 table-hover table-borderless table-striped text-left slim-table">
+                        <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th>Foydalanuvchi</th>
+                            <th>Masala</th>
+                            <th>Til</th>
+                            <th>Holati</th>
+                            <th>Vaqt</th>
+                            <th>Xotira</th>
+                            <th>Yuborilgan vaqt</th>
+                        </tr>
+                        {% for submission in submissions %}
+                            <tr>
+                                <td>
+                                    {% if request.user == user %}
+                                        <a href="{% url 'robo:attempt' submission.id %}">{{ submission.id }}</a>
+                                    {% else %}
+                                        {{ submission.id }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'account:profile' submission.user.username %}">
+                                        {{ submission.user.get_full_name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ submission.problem.get_absolute_url }}">{{ submission.problem.title }}</a>
+                                </td>
+                                <td>
+                                    {{ submission.lang }}
+                                </td>
+                                <td nowrap=""
+                                    class="text-{% if submission.verdict == 'Accepted' %}success{% elif submission.verdict == 'Waiting' %}white{% else %}danger{% endif %}">
+                                    {{ submission.verdict }}
+                                </td>
+                                <td nowrap="">{{ submission.time }}ms</td>
+                                <td nowrap="">0 KB</td>
+                                <td nowrap="">
+                                    {{ submission.created|date:"d.m.Y h:m" }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex mt-3">
+                        <div class="mx-auto">
+                            <nav>
+                                <ul class="pagination">
+
+                                    <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
+                                        <span class="page-link" aria-hidden="true">‹</span>
+                                    </li>
+
+
+                                    <li class="page-item active" aria-current="page"><span class="page-link">1</span>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=2">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=3">3</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=4">4</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=5">5</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=6">6</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=7">7</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=8">8</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=9">9</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=10">10</a>
+                                    </li>
+
+                                    <li class="page-item disabled" aria-disabled="true"><span
+                                            class="page-link">...</span></li>
+
+
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=71">71</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"
+                                                             href="https://robocontest.uz/profile/muhammadjon/attempts?page=72">72</a>
+                                    </li>
+
+
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="https://robocontest.uz/profile/muhammadjon/attempts?page=2" rel="next"
+                                           aria-label="Next »">›</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}

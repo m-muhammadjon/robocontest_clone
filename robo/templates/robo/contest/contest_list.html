@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="card">
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover table-borderless m-0 table-striped text-left slim-table">
+                <tbody>
+                <tr>
+                    <th>Nomi</th>
+                    <th></th>
+                    <th>Masalalar soni</th>
+                    <th>Qatnashuvchilar soni</th>
+                    <th>Boshlanish vaqti</th>
+                    <th>Holati</th>
+                </tr>
+                {% for contest in contests %}
+                    <tr>
+                        <td>
+                            <a href="{{ contest.get_absolute_url }}">
+                                {{ contest.name }}
+                            </a>
+                        </td>
+                        <th>
+                            {% if request.user in contest.participants.all %}
+                                <i class="fa fa-user-check"></i>
+                            {% endif %}
+                        </th>
+                        <td>{{ contest.problems.count }}</td>
+                        <td>{{ contest.participants.all.count }}</td>
+                        <td nowrap="">{{ contest.start }}</td>
+                        <td>{{ contest.status }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="d-flex mt-3">
+                <div class="mx-auto">
+                    <nav>
+                        <ul class="pagination">
+
+                            <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
+                                <span class="page-link" aria-hidden="true">‹</span>
+                            </li>
+
+
+                            <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="https://robocontest.uz/olympiads?page=2">2</a></li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="https://robocontest.uz/olympiads?page=3">3</a></li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="https://robocontest.uz/olympiads?page=4">4</a></li>
+
+
+                            <li class="page-item">
+                                <a class="page-link" href="https://robocontest.uz/olympiads?page=2" rel="next"
+                                   aria-label="Next »">›</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

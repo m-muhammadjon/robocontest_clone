@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load robo_tags %}
+{% block main %}
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <form action="" method="get" id="search_form">
+                        <div class="m-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Izlash..."
+                                       value="" name="search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" id="search"><i
+                                            class="fas fa-search"></i> Izlash
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="table-responsive">
+                <table class="table table-hover m-0 table-borderless table-striped text-left slim-table">
+                    <tr>
+                        <th style="width: 140px;"><a href="">Tartib raqam
+                            <i class="fa fa-sort"></i></a></th>
+                        <th></th>
+                        <th>Nomi</th>
+                        <th style="width: 110px;" class="text-center"><a
+                                href="">Qiyinchiligi <i
+                                class="fa fa-sort"></i></a></th>
+                        <th>Toifasi</th>
+
+
+                        <th class="text-center"><a href=""><i
+                                class="fa fa-user-check"></i> <i class="fa fa-sort"></i></a></th>
+                        <th class="text-center"><a href=""><i
+                                class="fa fa-check-square"></i> <i class="fa fa-sort"></i></a></th>
+                        <th class="text-center"><a href=""><i
+                                class="fab fa-strava"></i> <i class="fa fa-sort"></i></a></th>
+                        <th class="text-center"><a href=""><i
+                                class="fa fa-percentage"></i> <i class="fa fa-sort"></i></a></th>
+                    </tr>
+                    {% for task in tasks %}
+                        <tr>
+                            <td><a href="{{ task.get_absolute_url }}">{{ task.number|nulls }}</a></td>
+                            {% if task.id in accepted_problem_ids %}
+                                <td class="text-center">
+                                    <a href="">
+                                        <i class="fas fa-check-circle text-success"></i>
+                                    </a>
+                                </td>
+                            {% elif task.id in ignored_problem_ids %}
+                                <td class="text-center">
+                                    <i class="fas fa-times-circle text-danger"></i>
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                            <td><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></td>
+                            <td class="text-center">{{ task.difficulty }}%</td>
+                            <td>{{ task.type }}</td>
+                            <td class="text-center">{{ task.submissions.all|users_solved }}</td>
+                            <td class="text-center">{{ task.submissions.all|accepted_count }}</td>
+                            <td class="text-center">{{ task.submissions.all|attempts_count }}</td>
+                            <td class="text-center">{{ task.submissions.all|performance_percentage }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <div class="d-flex mt-3">
+                    <div class="mx-auto">
+                        <nav>
+                            <ul class="pagination">
+
+                                <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
+                                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                                </li>
+
+
+                                <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
+                                <li class="page-item"><a class="page-link" href="tasks4658.html?page=2">2</a></li>
+                                <li class="page-item"><a class="page-link" href="tasks9ba9.html?page=3">3</a></li>
+                                <li class="page-item"><a class="page-link" href="tasksfdb0.html?page=4">4</a></li>
+                                <li class="page-item"><a class="page-link" href="tasksaf4d.html?page=5">5</a></li>
+                                <li class="page-item"><a class="page-link" href="tasksc575.html?page=6">6</a></li>
+                                <li class="page-item"><a class="page-link" href="tasks235c.html?page=7">7</a></li>
+                                <li class="page-item"><a class="page-link" href="tasksfdfa.html?page=8">8</a></li>
+                                <li class="page-item"><a class="page-link" href="tasks0b08.html?page=9">9</a></li>
+                                <li class="page-item"><a class="page-link" href="tasks1448.html?page=10">10</a></li>
+
+                                <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span>
+                                </li>
+
+
+                                <li class="page-item"><a class="page-link" href="taskse4a7.html?page=21">21</a></li>
+                                <li class="page-item"><a class="page-link" href="tasks3c09.html?page=22">22</a></li>
+
+
+                                <li class="page-item">
+                                    <a class="page-link" href="tasks4658.html?page=2" rel="next"
+                                       aria-label="Next &raquo;">&rsaquo;</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

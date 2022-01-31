@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load robo_tags %}
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="">
+                        <i class="fa fa-book"></i> Masala </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link "
+                       href="{% url 'robo:task_attempts' task.number %}">
+                        <i class="fab fa-strava"></i> Oxirgi urinishlar </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link "
+                       href="">
+                        <i class="fa fa-comments"></i> Muhokama </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button"
+                       aria-haspopup="true" aria-expanded="false"><i class="fa fa-star"></i> Reyting</a>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item "
+                           href="">
+                            Vaqt </a>
+                        <a class="dropdown-item "
+                           href="">
+                            Xotira </a>
+                        <a class="dropdown-item "
+                           href="">
+                            Kod uzunligi </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-12 mb-3">
+            <div class="card mb-3">
+                <h1 class="h4 card-header text-center">
+                    Masala #{{ task.number|nulls:4 }}
+                </h1>
+                <div class="card-body p-0">
+                    <div class="px-3 pt-3">
+                        <span class="badge badge-primary" id="memory_info">Xotira {{ task.memory }} mb</span>
+                        <span class="badge badge-success" id="time_info">Vaqt {{ task.time|millisecond }} ms</span>
+
+                        <span class="badge badge-info text-white"
+                              id="complexity_info">Qiyinchiligi {{ task.difficulty }} %
+                        </span>
+
+                        <div class="float-right">
+                            <div>
+                                <button class="btn btn-primary btn-sm" id="fontDec">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+
+                                <div id="fontSize" class="d-inline py-2 px-1">14</div>
+
+                                <button class="btn btn-primary btn-sm" id="fontInc">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+
+                            <script>
+                                const minFontSize = 14;
+                                const maxFontSize = 24;
+                                const step = 2;
+
+                                let fontSize = Math.min(Math.max(Number(localStorage['taskFontSize']) || 14, minFontSize), maxFontSize);
+
+                                function setFontSize() {
+                                    /** @type  NodeListOf<HTMLElement> */
+                                    let items = document.querySelectorAll('.task-contents *');
+
+                                    for (let /** @type  HTMLElement */ item of items) {
+                                        if (item.style !== undefined) {
+                                            item.style.fontSize = `${fontSize}px`;
+                                        }
+                                    }
+
+                                    document.getElementById('fontSize').innerText = fontSize;
+                                    localStorage.setItem('taskFontSize', fontSize);
+                                }
+
+                                document.getElementById('fontInc').addEventListener('click', ev => {
+                                    fontSize = Math.min(maxFontSize, fontSize + step)
+                                    setFontSize()
+                                })
+
+                                document.getElementById('fontDec').addEventListener('click', ev => {
+                                    fontSize = Math.max(minFontSize, fontSize - step)
+                                    setFontSize()
+                                })
+
+
+                                document.addEventListener('DOMContentLoaded', evt => {
+                                    setFontSize()
+                                })
+                            </script>
+                        </div>
+
+                        <div class="mt-2">
+                            Muallif:
+                            <a href="{% url 'account:profile' task.author.username %}">
+                                {{ task.author.get_full_name }}
+                            </a>
+                        </div>
+
+                    </div>
+                    <hr>
+
+                    <div class="px-3">
+                        <h2 class="mt-3">{{ task.title }}</h2>
+                        <div class="card-text task-contents">
+                            <p>{{ task.body|safe }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="px-3">
+                        <div class="h5 text-info" id="input_info">Kiruvchi ma'lumotlar:</div>
+                        <div class="card-text task-contents">
+                            <p>{{ task.input|safe }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="px-3">
+                        <div class="h5 text-info" id="output_info">Chiquvchi ma'lumotlar:</div>
+                        <div class="card-text task-contents">
+                            <p>{{ task.output|safe }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="px-3 h5 text-info">Misollar</div>
+                    <div class="table-responsive px-3">
+                        <table class="table table-bordered table-hover monotext">
+                            <tr>
+                                <th class="pl-3" width="50">#</th>
+                                <th width="50%">input.txt</th>
+                                <th width="50%">output.txt</th>
+                            </tr>
+                            {% for test in task.samples.all %}
+                                <tr>
+                                    <td class="pl-3">{{ forloop.counter }}</td>
+                                    <td class="position-relative">
+                                        <pre>{{ test.input|linebreaks }}</pre>
+
+                                        <button class="btn btn-primary btn-sm clip-copy position-absolute"
+                                                style="top: 10px; right: 10px"
+                                                data-clipboard-text="{{ test.input|linebreaks }}">
+                                            <i class="fa fa-clipboard"></i>
+                                        </button>
+                                    </td>
+                                    <td class="position-relative">
+                                        <pre>{{ test.output|linebreaks }}</pre>
+
+                                        <button class="btn btn-primary btn-sm clip-copy position-absolute"
+                                                style="top: 10px; right: 10px"
+                                                data-clipboard-text="{{ test.output|linebreaks }}">
+                                            <i class="fa fa-clipboard"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="h5 card-header">
+                    Yechimini yuborish
+                </div>
+                {% if not request.user.is_authenticated %}
+                    <div class="card-body">
+                        Bu amalni bajarish uchun <b><a href="{% url 'account:login' %}">tizimga kiring</a></b>,
+                        agar profilingiz bo'lmasa istalgan payt <b><a href="{% url 'account:register' %}">ro'yxatdan
+                        o'tishingiz</a></b> mumkin
+                    </div>
+                {% else %}
+                    <div class="card-body">
+                        <form action="" method="post"> {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_lang">Til</label>
+                                <select class="form-control" required id="id_lang" name="lang">
+                                    <option value="cpp">C++ (GCC 11.2.0)</option>
+                                    <option value="python">Python 3.9</option>
+                                    <option value="java">Java</option>
+                                    <option value="dart">Dart 2.15.0</option>
+                                    <option value="js">Js (Node.js v14.17.5)</option>
+                                    <option value="pypy">PyPy3.8.12 v7.3.7</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="id_source">Code</label>
+                                <small id="code_length" data-maxlegth="65536">(0 / 65536)</small>
+                                <div>
+                                    <textarea rows="13" cols="107" id="id_source" name="source"></textarea>
+                                </div>
+                            </div>
+                            <button id="send_code" type="submit" class="mt-3 btn btn-primary">Yuborish</button>
+                        </form>
+
+
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if request.user.is_authenticated %}
+            <div class="col-12">
+                <div>
+                    <div class="card">
+                        <div class="h5 card-header">Oxirgi urinishlar</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-borderless m-0 text-center slim-table">
+                                    <tbody>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Masala</th>
+                                        <th>Holati</th>
+                                        <th>Til</th>
+                                        <th>Vaqt</th>
+                                        <th>Xotira</th>
+                                        <th>Vaqt</th>
+                                    </tr>
+                                    {% for submission in submissions %}
+                                        <tr id="">
+                                            <td><a href="{% url 'robo:attempt' submission.id %}">{{ submission.id }}</a>
+                                            </td>
+                                            <th>{{ submission.problem.title }}</th>
+                                            <td data-attempt-status=""
+                                                class="text-{% if submission.verdict == 'Accepted' %}success{% elif submission.verdict == 'Waiting' %}white{% else %}danger{% endif %}">{{ submission.verdict }}
+                                            </td>
+                                            <td>{{ submission.lang }}</td>
+                                            <td data-attempt-time="">{{ submission.time }} ms</td>
+                                            <td data-attempt-memory="">{{ submission.memory }} KB</td>
+                                            <td>{{ submission.created|date:"d.m.Y h:m" }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="7">
+                                                Hali birorta ham urinish bo'lmadi
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

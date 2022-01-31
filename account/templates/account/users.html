@@ -1,0 +1,357 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+    <div class="form-row">
+        <div class="col-12 col-md-8 mb-3">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover m-0 table-borderless table-striped text-left slim-table">
+                            {% for user in users %}
+                                <tr>
+                                    <td>
+                                        <img class="user-avatar" src="{% static 'assets/img/no-avatar.jpg' %}"
+                                             alt="Profile picture of user Husayn Hasanov" width="40px">
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'account:profile' user.username %}">
+                                            {{ user.get_full_name }}
+                                        </a>
+                                        <div class="small">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <i class="fas fa-medal text-primary"></i>
+                                        None
+                                        (0)
+                                    </td>
+                                    <td>
+                                        <span class='badge badge-pill badge-secondary text-white'>1 daqiqa avval</span>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+
+                        <div class="d-flex mt-3">
+                            <div class="mx-auto">
+                                <nav>
+                                    <ul class="pagination"></ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card position-sticky sticky-top" style="top: 20px;">
+                <p class="text-center card-header">Faol foydalanuvchilar</p>
+                <div class="card-body">
+
+            <span class="badge badge-success">
+                <a href="profile/akira.html" class="text-white">
+                    akbar_fattaev
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/adizbek.html" class="text-white">
+                    Adizbek Ergashev
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/tourist.html" class="text-white">
+                    Gennady Korotkevich
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/jamshidbekollanazarov.html" class="text-white">
+                    Jamshidbek
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/xolmirzayev.html" class="text-white">
+                    Og&#039;abek Xolmirzayev
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/borya.html" class="text-white">
+                    Jaxongir
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/absolyut.html" class="text-white">
+                    Abror Shukurullayev
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/sunnat.html" class="text-white">
+                    Sunatullo Hojiyev
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/mr_burkhonov.html" class="text-white">
+                    [Obid Sindarov]--&gt;&gt;Mr. Burkhonov
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/abdukakhkhorov.html" class="text-white">
+                    Abduqahhorov Muhammadamin
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/chibaintoibii.html" class="text-white">
+                    Islom Xamidjonov
+                </a>
+            </span>
+
+                    <span class="badge badge-success">
+                <a href="profile/shohbozbek.html" class="text-white">
+                    shahbozbek
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/ibrokhimjalolov.html" class="text-white">
+                    Ibrokhim Jalolov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/norbek_2006.html" class="text-white">
+                    Norbek Hamidov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/bilmayman.html" class="text-white">
+                    Keldiyorov Fathulla
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/shaxob.html" class="text-white">
+                    Shaxobiddin Shakarboyev
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/muhammadjon.html" class="text-white">
+                    Muhammadjon Muhamedov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/deva.html" class="text-white">
+                    Qarshiyev Asadbek
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/khamidulla.html" class="text-white">
+                    Hamidulla MIrkamolov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/doncoder.html" class="text-white">
+                    Muhammadmirzo Tursunov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/hatsker.html" class="text-white">
+                    Ikromov Jamshidbek
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/dilmurod_001.html" class="text-white">
+                    Dilmurod
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/reyx_5638.html" class="text-white">
+                    OTABEK
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/said0711.html" class="text-white">
+                    Saidislom
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/mr_komilov.html" class="text-white">
+                    Mr Komilov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/coder_cpp.html" class="text-white">
+                    Обид Синдаров
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/muhriddin---.html" class="text-white">
+                    Muhriddin Tukhtabaev
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/oktamov_18.html" class="text-white">
+                    O&#039;ktamov Ahmadjon
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/sanjaruz.html" class="text-white">
+                    Sanjar Saydaliyev
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/0ltinbekyalgoshev.html" class="text-white">
+                    Oltinbek Yalg&#039;oshev
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/programmer14_08.html" class="text-white">
+                    Shahriyor Sohidjonov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/bahromiddin.html" class="text-white">
+                    Bahromiddin
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/rashideveloper.html" class="text-white">
+                    ☺ HabibulloH ☺
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/ganijonovsarvarbek.html" class="text-white">
+                    Sarvarbek G&#039;anijonov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/shavkatjon_coder.html" class="text-white">
+                    Qodirov Shavkatjon
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/just_bax.html" class="text-white">
+                    baxtiyorov isfandiyor
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/azimjon_02.html" class="text-white">
+                    Azimjon Yusufov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/b_dev.html" class="text-white">
+                    Bahodir
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/rok.html" class="text-white">
+                    Radjapov Oybek
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/foolish_man.html" class="text-white">
+                    Iftixorbek Mominov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/mahfuz.html" class="text-white">
+                    Bahriddinova Mahfuzaxon
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/qurbonsaid.html" class="text-white">
+                    Qurbonsaid Rayimov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/khmansur.html" class="text-white">
+                    Mansur Xamrayev
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/onlyaloner.html" class="text-white">
+                    Анвар Умаров
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/bahodirov.html" class="text-white">
+                    Javohir Bahodirov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/a_s_i_l_b_e_k.html" class="text-white">
+                    Asilbek Toshkanov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/abdualiyev2912.html" class="text-white">
+                    Farxod Abdualiyev
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/iqboljon_07.html" class="text-white">
+                    Iqboljon Qoxxorov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/nouser493.html" class="text-white">
+                    Umidjon Odiljonov
+                </a>
+            </span>
+
+                    <span class="badge badge-secondary">
+                <a href="profile/jbnuu.html" class="text-white">
+                    Asliddin Ayxanov
+                </a>
+            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

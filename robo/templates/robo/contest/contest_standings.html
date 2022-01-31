@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load robo_tags %}
+{% block main %}
+    {% include 'robo/contest/contest_navbar.html' %}
+    <div class="tab-content">
+
+
+        <div class="tab-pane show active">
+            <div>
+                <div class="card">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table m-0 text-left">
+                            <tbody>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th style="max-width: 250px; min-width: 250px">Ism va familiya</th>
+                                <th class="text-center" style="width: 32px"><i class="fas fa-tasks"></i></th>
+                                <th>Ball</th>
+                                <th class="text-center">Jarima</th>
+                                {% for problem in contest_problem_items %}
+                                    <th class="text-center" style="min-width: 85px" title="{{ problem.problem.title }}">
+                                        <a href="{{ problem.get_absolute_url }}">{{ problem.name.upper }}</a>
+                                    </th>
+                                {% endfor %}
+
+                            </tr>
+
+                            {% for item in data %}
+                                <tr class="{% if item.user == request.user.get_full_name %}mine-result{% endif %}">
+                                    <td class="vc">{{ forloop.counter }}</td>
+                                    <td class="v">
+                                        <a href="{% url 'account:profile' item.username %}">{{ item.user }}</a><br>
+                                        <small>Lorem</small>
+                                    </td>
+                                    <td class="vc">{{ item.result }}</td>
+                                    <td class="vc">None</td>
+                                    <td class="vc">{{ item.penalty }}</td>
+                                    {% for p_info in item.problems_result %}
+                                        <td class="vc ">
+                                            <div class="text-{% if p_info|get_time != '' %}success{% else %}danger{% endif %}">
+                                                {{ p_info|get_penalty }}
+                                            </div>
+
+                                            <small>
+                                                {{ p_info|get_time }}
+                                            </small>
+                                        </td>
+                                    {% endfor %}
+
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div>Yechganlar soni</div>
+                                    <div>Urinib ko'rganlar soni</div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <th class="text-center px-1">
+                                    <div>
+                                        <span class="text-success">116</span>
+                                    </div>
+                                    <div>119</div>
+                                </th>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-flex mt-3">
+                    <div class="mx-auto">
+                        <div>
+                            <nav>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+{% endblock %}

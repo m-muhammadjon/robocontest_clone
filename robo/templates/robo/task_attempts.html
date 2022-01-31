@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <ul class="nav nav-pills mb-2" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'robo:task' taks_number %}">
+                        <i class="fa fa-book"></i> Masala </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       href="{% url 'robo:task_attempts' taks_number %}">
+                        <i class="fab fa-strava"></i> Oxirgi urinishlar </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link "
+                       href="">
+                        <i class="fa fa-comments"></i> Muhokama </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button"
+                       aria-haspopup="true" aria-expanded="false"><i class="fa fa-star"></i> Reyting</a>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item "
+                           href="">
+                            Vaqt </a>
+                        <a class="dropdown-item "
+                           href="">
+                            Xotira </a>
+                        <a class="dropdown-item "
+                           href="">
+                            Kod uzunligi </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body table-responsive p-0">
+                    <table class="table m-0 table-hover table-borderless table-striped text-left slim-table">
+                        <tr>
+                            <th>#</th>
+                            <th>Foydalanuvchi</th>
+                            <th>Masala</th>
+                            <th>Til</th>
+                            <th>Holati</th>
+                            <th>Vaqt</th>
+                            <th>Xotira</th>
+                            <th>Yuborilgan vaqt</th>
+                        </tr>
+                        {% for submission in submissions %}
+                            <tr>
+                                <td>
+                                    {% if submission.user == request.user %}
+                                        <a href="{% url 'robo:attempt' submission.id %}">{{ submission.id }}</a>
+                                    {% else %}
+                                        {{ submission.id }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'account:profile' submission.user.username           %}">
+                                        {{ submission.user.get_full_name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href=''>{{ submission.problem.title }}</a>
+                                </td>
+                                <td>
+                                    {{ submission.lang }}
+                                </td>
+                                <td nowrap
+                                    class="text-{% if submission.verdict == 'Accepted' %}success{% elif submission.verdict == 'Waiting' %}white{% else %}danger{% endif %}">
+                                    {{ submission.verdict }}
+                                </td>
+                                <td nowrap>{{ submission.time }}ms</td>
+                                <td nowrap>{{ submission.memory }} KB</td>
+                                <td nowrap>
+                                    {{ submission.created }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

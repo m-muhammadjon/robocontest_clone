@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block main %}
+    <div>
+        {% include 'robo/contest/contest_navbar.html' %}
+
+        <div class="tab-content">
+            <div class="tab-pane show active">
+                <div class="alert alert-success mb-2">
+                    <div>Siz ushbu olimpiadada ishtirok etyapsiz</div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body p-0">
+                        <h3 class="px-3 py-2 pt-4">{{ contest.name }}</h3>
+
+                        <div class="card-text px-3 py-2">
+                            {{ contest.description|linebreaks }}
+                        </div>
+
+
+                        <div class="px-3">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th>Holati</th>
+                                    <td>
+                                        <div class="text-{% if contest.status == 'boshlanmagan' %}white{% elif contest.status == 'otkazilmoqda' %}success{% else %}danger{% endif %}">{{ contest.status }}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="300px">Boshlanish vaqti</th>
+                                    <td>{{ contest.start|date:"h:m (d.m.Y)" }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tugash vaqti</th>
+                                    <td>{{ contest.end|date:"h:m (d.m.Y)" }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Davomiyligi:</th>
+                                    <td>{{ contest.get_duration }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Dasturlash tillari:</th>
+                                    <td>
+                                        {% for lang in contest.langs.all %}
+                                            <span class="badge badge-info text-white">{{ lang.name }}</span>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Masalalar soni:</th>
+                                    <td>{{ contest.problems.all.count }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Qatnashuvchilar soni</th>
+                                    <td>{{ contest.participants.all.count }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mx-3 my-2">
+                            {% if now < contest.start %}
+                                <button id="register" type="button"
+                                        class=" mt-3 btn
+                                    btn-{% if request.user in contest.participants.all %}danger{% else %}success{% endif %}">
+                                    {% if request.user in contest.participants.all %}
+                                        Bekor qilish
+                                    {% else %}
+                                        Qatnashish
+                                    {% endif %}
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-right">
+                            <a class="badge badge-primary"
+                               href="https://telegram.me/share/url?url=https://{{ host }}{{ contest.get_absolute_url }}"
+                               target="_blank">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+<script>
+    {% block scripts %}
+        document.querySelector('button#register').onclick = function (e) {
+            window.location.pathname = 'olympiads/{{ contest.id }}/register';
+        }
+    {% endblock %}
+</script>
