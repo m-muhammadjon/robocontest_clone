@@ -62,12 +62,13 @@ def check_cpp(id):
                 }
             )
             try:
-                p2 = subprocess.run('program.exe', input=input, capture_output=True, shell=True,
+                p2 = subprocess.run('./program.exe', input=input, capture_output=True, shell=True,
                                     timeout=submission.problem.time)
                 end = time.time()
                 max_time = max(max_time, (end - begin) * 1000)
                 if p2.stderr:
                     submission.verdict = f'Runtime error (test {k})'
+                    print(p2.stderr)
                     submission.time = max_time
                     submission.save()
                     async_to_sync(layer.group_send)(
