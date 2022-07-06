@@ -1,15 +1,15 @@
 import datetime
 import os
+import pathlib
 import subprocess
 import time
-
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.utils import timezone
 
 from .models import Submission, TestCase, ContestResult, ContestProblem
 
-os.chdir("C:/Django projects/robocontest_clone/robo/files")
+os.chdir(str(pathlib.Path().resolve())+'/robo/files')
 
 
 def check_cpp(id):

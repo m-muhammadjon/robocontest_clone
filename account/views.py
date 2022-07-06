@@ -1,9 +1,9 @@
 import time
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q, Sum
 from django.http import HttpResponse
+import pathlib
 from django.shortcuts import render, redirect
 
 from robo.models import Problem, Submission, Contest
@@ -56,6 +56,7 @@ def user_logout(request):
 
 def home(request):
     start = time.time()
+    print('******', pathlib.Path().resolve())
     users_count = User.objects.all().count()
     submissions_count = Submission.objects.all().count()
     tasks_count = Problem.objects.all().count()
