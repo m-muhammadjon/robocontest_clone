@@ -1,3 +1,4 @@
+import math
 import time
 
 from asgiref.sync import async_to_sync
@@ -37,7 +38,7 @@ def task_list(request):
                                                    'name': 'tasks',
                                                    'accepted_problem_ids': accepted_problem_ids,
                                                    'ignored_problem_ids': ignored_problem_ids,
-                                                   'gen_time': int((end - start) * 1000)})
+                                                   'gen_time': math.ceil((end - start) * 1000)})
 
 
 def task_detail(request, number):
@@ -92,7 +93,7 @@ def task_detail(request, number):
     return render(request, 'robo/task_detail.html', {'task': task,
                                                      'submissions': submissions,
                                                      'name': 'tasks',
-                                                     'gen_time': int((end - start) * 1000)})
+                                                     'gen_time': math.ceil((end - start) * 1000)})
 
 
 def task_attempts(request, number):
@@ -101,7 +102,7 @@ def task_attempts(request, number):
     end = time.time()
     return render(request, 'robo/task_attempts.html', {'submissions': submissions,
                                                        'taks_number': number,
-                                                       'gen_time': int((end - start) * 1000)})
+                                                       'gen_time': math.ceil((end - start) * 1000)})
 
 
 def attempts(request):
@@ -110,7 +111,7 @@ def attempts(request):
     end = time.time()
     return render(request, 'robo/attempts.html', {'submissions': submissions,
                                                   'name': 'attempts',
-                                                  'gen_time': int((end - start) * 1000)})
+                                                  'gen_time': math.ceil((end - start) * 1000)})
 
 
 def attempt_detail(request, id):
@@ -121,7 +122,7 @@ def attempt_detail(request, id):
     end = time.time()
     return render(request, 'robo/attempts_detail.html', {'submission': submission,
                                                          'name': 'attempts',
-                                                         'gen_time': int((end - start) * 1000)})
+                                                         'gen_time': math.ceil((end - start) * 1000)})
 
 
 def rejudge(request, number):
@@ -174,7 +175,7 @@ def contest_list(request):
     contests = Contest.objects.all().order_by('-id')
     end = time.time()
     return render(request, 'robo/contest/contest_list.html', {'contests': contests,
-                                                              'gen_time': int((end - start) * 1000)})
+                                                              'gen_time': math.ceil((end - start) * 1000)})
 
 
 def contest_detail(request, id):
@@ -188,7 +189,7 @@ def contest_detail(request, id):
                                                                 'now': now,
                                                                 'host': host,
                                                                 'name': 'olymp',
-                                                                'gen_time': int((end - start) * 1000)})
+                                                                'gen_time': math.ceil((end - start) * 1000)})
 
 
 def register_contest(request, id):
@@ -238,7 +239,7 @@ def contest_problem(request, contest_id, problem_name):
                                                                  'first_problem': 'A',
                                                                  'now': now,
                                                                  'name': 'tasks',
-                                                                 'gen_time': int((end - start) * 1000)})
+                                                                 'gen_time': math.ceil((end - start) * 1000)})
 
 
 def contest_submissions(request, id):
@@ -254,7 +255,7 @@ def contest_submissions(request, id):
                                                                   'submissions': submissions,
                                                                   'first_problem': 'A',
                                                                   'name': 'attempts',
-                                                                  'gen_time': int((end - start) * 1000)})
+                                                                  'gen_time': math.ceil((end - start) * 1000)})
 
 
 def contest_results(request, id):
@@ -308,7 +309,7 @@ def contest_results(request, id):
                                                                    'name': 'standings',
                                                                    'contest_problem_items': contest_problem_items,
                                                                    'data': data,
-                                                                   'gen_time': int((end - startt) * 1000)})
+                                                                   'gen_time': math.ceil((end - startt) * 1000)})
 
 
 def contest_participants(request, id):
@@ -320,4 +321,4 @@ def contest_participants(request, id):
                                                                       'first_problem': 'A',
                                                                       'users': users,
                                                                       'contest': contest,
-                                                                      'gen_time': int((end - start) * 1000)})
+                                                                      'gen_time': math.ceil((end - start) * 1000)})

@@ -1,3 +1,4 @@
+import math
 import time
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -35,9 +36,7 @@ def user_login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            print(cd, cd['username'], cd['password'])
             user = authenticate(request, username=cd['username'], password=cd['password'])
-            print(user)
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -66,7 +65,7 @@ def home(request):
                                          'submissions_count': submissions_count,
                                          'tasks_count': tasks_count,
                                          'contests_count': contests_count,
-                                         'gen_time': int((end - start) * 1000)})
+                                         'gen_time': math.ceil((end - start) * 1000)})
 
 
 def users(request):
@@ -75,7 +74,7 @@ def users(request):
     end = time.time()
     return render(request, 'account/users.html', {'users': users,
                                                   'name': 'users',
-                                                  'gen_time': int((end - start) * 1000)})
+                                                  'gen_time': math.ceil((end - start) * 1000)})
 
 
 def user_profile(request, username):
@@ -109,7 +108,7 @@ def user_profile(request, username):
                                                          'all_submissions': all_submissions,
                                                          'accepted_submissions': accepted_submissions,
                                                          'ignored_submissions': ignored_submissions,
-                                                         'gen_time': int((end - start) * 1000),
+                                                         'gen_time': math.ceil((end - start) * 1000),
                                                          'name': 'profile'})
 
 
@@ -121,7 +120,7 @@ def user_attempts(request, username):
     return render(request, 'profile/user_attempts.html', {'submissions': submissions,
                                                           'user': user,
                                                           'name': 'user_attempts',
-                                                          'gen_time': int((end - start) * 1000)})
+                                                          'gen_time': math.ceil((end - start) * 1000)})
 
 
 def user_solved_tasks(request, username):
