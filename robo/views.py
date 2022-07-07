@@ -1,16 +1,14 @@
 import math
-import time
 
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
 from colorama import Back
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
+from robo.judges import *
 from .forms import SubmissionForm
-from .judges import check_cpp, check_python, check_java, check_js, check_dart, check_pypy, contest_submission
 from .models import Problem, Submission, Contest, ContestResult, ContestProblem
 
 
@@ -107,7 +105,16 @@ def task_attempts(request, number):
 
 def attempts(request):
     start = time.time()
-    submissions = Submission.objects.all().order_by('-id')
+    object_list = Submission.objects.all().order_by('-id')
+    paginator = Paginator(object_list, 20)
+    page = request.GET.get('page')
+    print(paginator.num_pages)
+    try:
+        submissions = paginator.page(page)
+    except PageNotAnInteger:
+        submissions = paginator.page(1)
+    except EmptyPage:
+        submissions = paginator.page(paginator.num_pages)
     end = time.time()
     return render(request, 'robo/attempts.html', {'submissions': submissions,
                                                   'name': 'attempts',
@@ -163,8 +170,6 @@ def rejudge_attempt(request, id):
             check_java(submission.id)
         elif submission.lang == 'js':
             check_js(submission.id)
-        elif submission.lang == 'pypy':
-            check_pypy(submission.id)
         return JsonResponse({'status': 'tugadi'})
     else:
         return JsonResponse({'status': 'manzilda adashdiz!'})
@@ -246,10 +251,18 @@ def contest_submissions(request, id):
     start = time.time()
     contest = Contest.objects.get(id=id)
     now = timezone.now()
-    submissions = Submission.objects.filter(contest_id=id).order_by('-created')
+    object_list = Submission.objects.filter(contest_id=id).order_by('-created')
     if contest.start <= now <= contest.end:
         if request.user not in contest.participants.all():
-            return HttpResponseNotFound()
+            return HttpResponse("""<h1><center>Access denied🔒</center></h1>""")
+    paginator = Paginator(object_list, 20)
+    page = request.GET.get('page')
+    try:
+        submissions = paginator.page(page)
+    except PageNotAnInteger:
+        submissions = paginator.page(1)
+    except EmptyPage:
+        submissions = paginator.page(paginator.num_pages)
     end = time.time()
     return render(request, 'robo/contest/contest_attempts.html', {'contest': contest,
                                                                   'submissions': submissions,

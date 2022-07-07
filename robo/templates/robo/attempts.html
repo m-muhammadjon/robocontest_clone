@@ -55,6 +55,23 @@
                             </tr>
                         {% endfor %}
                     </table>
+                    <div class="d-flex mt-3">
+                        <div class="mx-auto">
+                            <div>
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="page-item {% if not submissions.has_previous %}disabled{% endif %}">
+                                            <span class="page-link"><a style="color: #ffffff" href="{% if submissions.has_previous %}?page={{ submissions.previous_page_number }}{% endif %}">« Previous</a></span>
+                                        </li>
+                                        <li class="page-item {% if not submissions.has_next %}disabled{% endif %}">
+                                            <span class="page-link"><a style="color: #ffffff" href="{% if submissions.has_next %}?page={{ submissions.next_page_number }}{% endif %}">Next »</a></span>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
